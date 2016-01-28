@@ -1,0 +1,46 @@
+<div ng-app = 'myApp' ng-controller = 'ordersController'>
+	<div id = 'side'>
+		<h4>Add a new order</h4>
+		<form>
+			Customer <select ng-model = 'new_order.name'>
+				<option ng-repeat = "customer in customers"  ng-bind = "customer.name">{{ customer.name }}</option>
+			</select><br><br>
+
+			Order <select ng-model = 'new_order.quantity'>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</select>
+
+			<select ng-model = 'new_order.product'>
+				<option ng-repeat = "product in products"  value = '{{ product.name }}' ng-bind = 'product.name'></option>
+			</select><br><br>
+			<input type = 'submit' value = 'Order' ng-click ='addOrder()'>
+		</form><br>
+
+		<div>
+			Search for Order: <input placeholder='Product Name...' type = 'text' ng-model = 'filter_name'>
+		</div><br><br><br>
+	</div>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Order Name</th>
+				<th>Product</th>
+				<th>Quantity</th>
+				<th>Date</th>
+			</tr>
+		</thead>
+
+		<tbody ng-repeat = "order in orders | filter: { name: filter_name }">
+			<tr>
+				<td ng-bind = 'order.name'></td>
+				<td ng-bind = 'order.product'></td>
+				<td ng-bind = 'order.quantity'></td>
+				<td ng-bind = "order.date | date : 'mediumDate'"></td>
+			<tr>
+		</tbody>
+	</table>
+</div>

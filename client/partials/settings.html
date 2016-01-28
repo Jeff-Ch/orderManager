@@ -1,0 +1,30 @@
+<div ng-app = 'myApp' ng-controller = 'customersController'>
+	<p ng-bind = 'name_exists'></p>
+	<h3>Add a new customer</h3>
+	<form>
+		Customer Name: <input type = 'text' ng-model = 'new_customer.name'>
+		<input type = 'submit' value = 'Add' ng-click ='addCustomer()'>
+	</form><br>
+
+	<div>
+		Search by Name: <input type = 'text' ng-model = 'filter_name'>
+	</div>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Date</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+
+		<tbody ng-repeat = "customer in customers | filter: { name: filter_name }">
+			<tr>
+				<td ng-bind = 'customer.name'></td>
+				<td ng-bind = "customer.date | date : 'mediumDate'"></td>
+				<td><button ng-click = 'removeCustomer(customer._id)'>Delete</button></td>
+			<tr>
+		</tbody>
+	</table>
+</div>

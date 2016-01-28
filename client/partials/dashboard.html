@@ -1,0 +1,20 @@
+<div ng-app = 'myApp' ng-controller = 'dashboardController'>
+
+	<div id = 'side' class ='col-md-2 col-sm-2'>
+		<input placeholder = 'search...' type = 'text' ng-model = 'filter_name'>
+	</div>
+	
+	<div id = 'content' class ='col-md-9 col-sm-9'>
+		<div class = 'products' ng-repeat = "product in products | filter: { name: filter_name }">
+			<img src = '{{ product.url }}' height = 120px width = 90px>
+			<p class = 'product'ng-bind = 'product.name'></p>
+			<p class = 'product'>(<span ng-bind = 'product.quantity'></span> left)</p>
+		</div>
+
+		<h4>New Orders</h4>
+		<p ng-repeat = "order in orders | filter: { name: filter_name }"><span ng-bind = 'order.name'></span> purchased <span ng-bind = 'order.quantity'></span> <span ng-bind = 'order.product'></span>.</p><br><br>
+
+		<h4>New Customers</h4>
+		<p ng-repeat = "customer in customers | filter: { name: filter_name }"><span ng-bind = 'customer.name'></span> has joined the store.</p>
+	</div>
+</div>

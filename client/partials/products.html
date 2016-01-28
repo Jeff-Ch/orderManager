@@ -1,0 +1,28 @@
+<div ng-app = 'myApp' ng-controller = 'productsController'>
+	<div id = 'side'  class ='col-md-3 col-sm-3'>
+		
+		<h4>Add a new product</h4>
+		<form>
+			Name: <input type = 'text' placeholder = 'name...' ng-model = 'new_product.name'><br><br>
+			Image(url): <input type = 'text' placeholder = 'http://' ng-model = 'new_product.url'><br><br>
+			Description: <textarea  rows = '4' cols = '20' ng-model = 'new_product.description'></textarea><br><br>
+			Initial Quantity: <select ng-model = 'new_product.quantity'>
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="30">30</option>
+				<option value="40">40</option>
+				<option value="50">50</option>
+			</select><br><br>
+			<input type = 'submit' value = 'Add' ng-click ='addProduct()'>
+		</form><br><br>
+		Search for Product: <input placeholder = 'Product Name...' type = 'text' ng-model = 'filter_name'>
+	</div>
+
+	<div id = 'content' class ='col-md-8 col-sm-8'>
+		<div class = 'products' ng-repeat = "product in products | filter: { name: filter_name }">
+			<img src = '{{ product.url }}' height = 120px width = 90px>
+			<p class = 'product' ng-bind = 'product.name'></p>
+			<p class = 'product'>(<span ng-bind = 'product.quantity'></span> left)</p>
+		</div>
+	</div>
+</div>
