@@ -17,7 +17,9 @@ module.exports = function(app){
 		orders.create(req, res);
 	})
 
-
+	app.post('/deleteorder', function(req, res){
+		orders.remove(req,res);
+	})
 
 	app.get('/customers', function(req, res){
 		customers.all(req, res);

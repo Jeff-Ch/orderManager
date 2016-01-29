@@ -1,46 +1,71 @@
 <div ng-app = 'myApp' ng-controller = 'ordersController'>
-	<div id = 'side'>
-		<h4>Add a new order</h4>
+	<div id = 'side'  class ='col-md-3 col-sm-3'>
+		<h4 class="text-center">Add a new order</h4>
 		<form>
-			Customer <select ng-model = 'new_order.name'>
-				<option ng-repeat = "customer in customers"  ng-bind = "customer.name">{{ customer.name }}</option>
-			</select><br><br>
-
-			Order <select ng-model = 'new_order.quantity'>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-			</select>
-
-			<select ng-model = 'new_order.product'>
-				<option ng-repeat = "product in products"  value = '{{ product.name }}' ng-bind = 'product.name'></option>
-			</select><br><br>
-			<input type = 'submit' value = 'Order' ng-click ='addOrder()'>
-		</form><br>
-
-		<div>
-			Search for Order: <input placeholder='Product Name...' type = 'text' ng-model = 'filter_name'>
-		</div><br><br><br>
+			<div class='row'>
+				<div class="form-group col-md-8 col-md-offset-2">
+					<label for="cust">Customer</label><br>
+					<select class='form-control' ng-model = 'new_order.name'>
+						<option ng-repeat = "customer in customers"  ng-bind = "customer.name">{{ customer.name }}</option>
+					</select>
+				</div>
+				<div class="form-group col-md-8 col-md-offset-2">
+					<label for="product">Product</label>
+					<select class='form-control' ng-model = 'new_order.product'>
+						<option ng-repeat = "product in products"  value = '{{ product.name }}' ng-bind = 'product.name'></option>
+					</select>
+				</div>
+				<div class="form-group col-md-5 col-md-offset-2">
+					<label for="quantity">Quantity Ordered</label>
+					<input type="number" class="form-control" id="quantity" min ='0' ng-model = 'new_order.quantity'></input>
+				</div>
+			</div>
+			<div class='row'>
+				<div class="form-group col-md-6 col-md-offset-4">
+					<button type="submit" class="btn btn-primary" ng-click ='addOrder()'>Add Order</button>
+				</div>
+			</div>
+		</form>
 	</div>
 
-	<table>
-		<thead>
-			<tr>
-				<th>Order Name</th>
-				<th>Product</th>
-				<th>Quantity</th>
-				<th>Date</th>
-			</tr>
-		</thead>
-
-		<tbody ng-repeat = "order in orders | filter: { name: filter_name }">
-			<tr>
-				<td ng-bind = 'order.name'></td>
-				<td ng-bind = 'order.product'></td>
-				<td ng-bind = 'order.quantity'></td>
-				<td ng-bind = "order.date | date : 'mediumDate'"></td>
-			<tr>
-		</tbody>
-	</table>
+	<div id = 'content' class ='col-md-8 col-sm-8'>
+		<div class='row'>
+			<div class='col-md-3 col-md-offset-1'>
+				<label for="search">Search by Product:</label>
+				<input type="text" class="form-control" id="search" ng-model = 'filter_product'>
+			</div>
+			<div class='col-md-3'>
+				<label for='search2'>By Customer:</label>
+				<input type="text" class="form-control" id="search2" ng-model = 'filter_name'>
+			</div>
+			<div class='col-md-3'>
+				<label for='search3'>By Order Date (YYYY-MM-DD):</label>
+				<input type="text" class="form-control" id="search3" ng-model = 'filter_date'>
+			</div>
+		</div><br>
+		<div class='row'>
+			<div class='col-md-9 col-md-offset-1'>
+				<table class='table table-hover'>
+					<thead>
+						<tr>
+							<th>Customer</th>
+							<th>Product</th>
+							<th>Quantity</th>
+							<th>Order Date</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody ng-repeat = "order in orders | filter: { name: filter_name } | filter: {product: filter_product} | filter: {date: filter_date}">
+						<tr>
+							<td ng-bind = 'order.name'></td>
+							<td ng-bind = 'order.product'></td>
+							<td ng-bind = 'order.quantity'></td>
+							<td ng-bind = "order.date | date : 'mediumDate'"></td>
+							<td><button type='button' class='btn btn-danger' ng-click = 'removeOrder(order._id)'>Delete</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>

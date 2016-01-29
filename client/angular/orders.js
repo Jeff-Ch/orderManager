@@ -16,7 +16,12 @@ myApp.factory('orderFactory',function($http){
 			callback();
 		})
 	}
-    // most important step: return the object so it can be used by the rest of our angular code
+
+	factory.deleteOrder= function(id, callback){
+        $http.post('/deleteorder', {'id': id}).success(function(){
+            callback();
+        })
+    }
     return factory
 });
 
@@ -48,6 +53,15 @@ myApp.controller('ordersController', function ($scope, orderFactory, customerFac
 			});
 		})
 	}
+
+	$scope.removeOrder = function(id){
+        orderFactory.deleteOrder(id, function(){
+            orderFactory.getOrders(function(data){
+                $scope.orders = data;
+                $scope.new_customer = {};
+            })
+        })
+    }
     
 
 })

@@ -1,32 +1,48 @@
 <div ng-app = 'myApp' ng-controller = 'customersController'>
-	<div id = 'side'>
-		<p ng-bind = 'name_exists'></p>
-		<h4>Add a new customer</h4>
+	<div id = 'side'  class ='col-md-3 col-sm-3'>
+		<h4 class="text-center">Add a new customer</h4>
 		<form>
-			Customer Name: <input type = 'text' ng-model = 'new_customer.name'>
-			<input type = 'submit' value = 'Add' ng-click ='addCustomer()'>
-		</form><br>
-
-		<div>
-			Search for Customer: <input type = 'text' placeholder= 'Enter Name...' ng-model = 'filter_name'>
-		</div><br><br>
+			<div class='row'>
+				<div class="form-group col-md-8 col-md-offset-2">
+					<label for="cust">Name</label>
+					<input type="text" class="form-control" id="cust" ng-model = 'new_customer.name'>
+				</div>
+				<div class='row'>
+					<div class="form-group col-md-6 col-md-offset-4">
+						<button type="submit" class="btn btn-primary" ng-click ='addCustomer()'>Add Customer</button>
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
 
-	<table>
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Date</th>
-				<th>Action</th>
-			</tr>
-		</thead>
+	<div id = 'content' class ='col-md-8 col-sm-8'>
+		<div class='row'>
+			<div class="form-group col-md-4 col-md-offset-4">
+				<label for="search">Search for Customer:</label>
+				<input type="text" class="form-control" id="search" ng-model = 'filter_name'>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-9 col-md-offset-1'>
+				<table class='table table-hover'>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Date Added</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody ng-repeat = "customer in customers | filter: { name: filter_name }">
+						<tr>
+							<td ng-bind = 'customer.name'></td>
+							<td ng-bind = "customer.date | date : 'mediumDate'"></td>
+							<td><button  type='button' class='btn btn-danger' ng-click = 'removeCustomer(customer._id)'>Delete</button></td>
+							<tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 
-		<tbody ng-repeat = "customer in customers | filter: { name: filter_name }">
-			<tr>
-				<td ng-bind = 'customer.name'></td>
-				<td ng-bind = "customer.date | date : 'mediumDate'"></td>
-				<td><button ng-click = 'removeCustomer(customer._id)'>Delete</button></td>
-			<tr>
-		</tbody>
-	</table>
-</div>
+		</div>

@@ -21,6 +21,16 @@ module.exports = {
 				res.json();
 			}
 		})
+	},
+
+	remove: function(req, res){
+		Order.remove({_id: req.body.id}, function(err){
+			if(err){
+				console.log('Error in Remove method of orders.js controller');
+			} else{
+				res.json();
+			}
+		})
 	}
 
 }
