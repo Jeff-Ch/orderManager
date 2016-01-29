@@ -1,4 +1,5 @@
 <div ng-app = 'myApp' ng-controller = 'productsController'>
+
 	<div id = 'side'  class ='col-md-3 col-sm-3'>
 		<h4 class="text-center">Add a new product</h4>
 		<form>
@@ -39,6 +40,7 @@
 			<img src = '{{ product.url }}' height = 120px width = 90px>
 			<p class = 'product' ng-bind = 'product.name'></p>
 			<p class = 'product'>(<span ng-bind = 'product.quantity'></span> left)</p>
+			<button type='button' class='btn btn-success' ng-click = 'editProduct(product._id)'>Edit</button>  
 		</div>
 	</div>
 </div>

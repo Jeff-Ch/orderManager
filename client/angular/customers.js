@@ -11,6 +11,7 @@ myApp.factory('customerFactory',function($http){
 
     factory.addCustomer= function(info, callback){
         $http.post('/addcustomer', info).success(function(name_exists){
+            console.log(name_exists);
             callback(name_exists);
         })
     }
@@ -33,7 +34,7 @@ myApp.controller('customersController', function ($scope, customerFactory){
     $scope.addCustomer = function (){
         $scope.new_customer.date = new Date();
         customerFactory.addCustomer($scope.new_customer, function(name_exists){
-            $scope.name_exists = name_exists.msg;
+            $scope.name_exists = name_exists;
             customerFactory.getCustomers(function(data){
                 $scope.customers = data;
                 $scope.new_customer = {};

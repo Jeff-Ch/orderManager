@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var validate = require('mongoose-validator');
 
 var OrderSchema = new mongoose.Schema({
 	name: String,

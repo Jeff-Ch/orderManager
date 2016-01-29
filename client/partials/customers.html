@@ -1,4 +1,9 @@
 <div ng-app = 'myApp' ng-controller = 'customersController'>
+	<div ng-if="name_exists">
+		<div ng-repeat= 'error in name_exists'>
+			<p ng-bind='error.message'></p>
+		</div>
+	</div>
 	<div id = 'side'  class ='col-md-3 col-sm-3'>
 		<h4 class="text-center">Add a new customer</h4>
 		<form>
@@ -37,7 +42,7 @@
 						<tr>
 							<td ng-bind = 'customer.name'></td>
 							<td ng-bind = "customer.date | date : 'mediumDate'"></td>
-							<td><button  type='button' class='btn btn-danger' ng-click = 'removeCustomer(customer._id)'>Delete</button></td>
+							<td><button  type='button' class='btn btn-success' ng-click = 'editCustomer(customer._id)'>Edit</button>  <button  type='button' class='btn btn-danger' ng-click = 'removeCustomer(customer._id)'>Delete</button></td>
 							<tr>
 							</tbody>
 						</table>

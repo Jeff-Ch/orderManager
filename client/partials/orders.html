@@ -61,7 +61,7 @@
 							<td ng-bind = 'order.product'></td>
 							<td ng-bind = 'order.quantity'></td>
 							<td ng-bind = "order.date | date : 'mediumDate'"></td>
-							<td><button type='button' class='btn btn-danger' ng-click = 'removeOrder(order._id)'>Delete</button></td>
+							<td><button  type='button' class='btn btn-success' ng-click = 'editOrder(order._id)'>Edit</button>  <button type='button' class='btn btn-danger' ng-click = 'removeOrder(order._id)'>Delete</button></td>
 						</tr>
 					</tbody>
 				</table>

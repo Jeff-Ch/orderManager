@@ -13,16 +13,16 @@ module.exports = {
 	},
 
 	create: function(req, res){
-		var customer = new Product({name: req.body.name, url: req.body.url, description: req.body.description, quantity: req.body.quantity});
+		var product = new Product({name: req.body.name, url: req.body.url, description: req.body.description, quantity: req.body.quantity, price: req.body.price});
 		Product.find({name: req.body.name}, function(err, products){
 			if(err){
 			} else if(products[0]){
-				res.json({'msg': 'Name already exists'});
+				res.json({'msg': 'Product already exists'});
 			} 
 			else {
-				customer.save(function(err){
+				product.save(function(err){
 					if(err){
-						console.log('Error in Create method of products.js controller');
+						res.render('products', {errors: product.errors});
 					} else{
 						res.json();
 					}

@@ -13,16 +13,20 @@ module.exports = {
 	},
 
 	create: function(req, res){
-		var customer = new Customer({name: req.body.name, date: req.body.date});
-		Customer.find({name: req.body.name}, function(err, customers){
+		if(req.body.name == undefined){
+			res.json({'name':{'message': 'Name cannot be blank'}});
+		}
+		var name_entered = req.body.name.toUpperCase();
+		var customer = new Customer({name: name_entered, date: req.body.date});
+		Customer.find({name: name_entered}, function(err, customers){
 			if(err){
 			} else if(customers[0]){
-				res.json({'msg': 'Name already exists'});
+				res.json({'name':{'message': 'Name already exists'}});
 			} 
 			else {
 				customer.save(function(err){
 					if(err){
-						console.log('Error in Create method of customers.js controller');
+						res.json(customer.errors);
 					} else{
 						res.json();
 					}
