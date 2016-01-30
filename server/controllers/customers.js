@@ -69,7 +69,7 @@ module.exports = {
 				} else{
 					res.json({'name':{'message': 'Name succesfully changed'}});
 				}
-			});
+			})
 		}
 	}
 }

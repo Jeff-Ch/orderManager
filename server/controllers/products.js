@@ -78,7 +78,7 @@ module.exports = {
 					console.log('here2');
 					res.json({'name':{'message': 'Quantity succesfully updated'}});
 				}
-			});
+			})
 		}
 	}
 }

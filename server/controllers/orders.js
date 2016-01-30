@@ -56,8 +56,7 @@ module.exports = {
 				} else{
 					res.json({'name':{'message': 'Status succesfully updated'}});
 				}
-			});
+			})
 		}
 	}
-
 }

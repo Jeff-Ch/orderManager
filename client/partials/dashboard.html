@@ -1,14 +1,18 @@
 <div ng-app = 'myApp' ng-controller = 'dashboardController'>
-
-	<div id = 'side' class ='col-md-2 col-sm-2'>
-		<input placeholder = 'search...' type = 'text' ng-model = 'filter_name'>
-	</div>
-	
-	<div id = 'content' class ='col-md-9 col-sm-9'>
+	<div class='row'>
+	<div class ='col-md-10 col-md-offset-1'>
+		<h3 class='text-center'>Mission Control</h3>
+		<h4>Current Inventory</h4>
 		<div class = 'products' ng-repeat = "product in products | filter: { name: filter_name }">
-			<img src = '{{ product.url }}' height = 120px width = 90px>
-			<p class = 'product'ng-bind = 'product.name'></p>
-			<p class = 'product'>(<span ng-bind = 'product.quantity'></span> left)</p>
+			<img ng-src = '{{ product.url }}' height = 120px width = 90px>
+			<div ng-if='product.quantity <= 0'>
+				<p class = 'outofstock' ng-bind = 'product.name'></p>
+				<p class = 'outofstock'>(<span ng-bind = 'product.quantity'></span> in Debt)</p>
+			</div>
+			<div ng-if='product.quantity > 0'>
+				<p class = 'product' ng-bind = 'product.name'></p>
+				<p class = 'product'>(<span ng-bind = 'product.quantity'></span> left)</p>
+			</div>
 		</div>
 
 		<h4>New Orders</h4>
@@ -17,4 +21,5 @@
 		<h4>New Customers</h4>
 		<p ng-repeat = "customer in customers | filter: { name: filter_name }"><span ng-bind = 'customer.name'></span> has joined the store.</p>
 	</div>
+</div>
 </div>

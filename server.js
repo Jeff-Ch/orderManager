@@ -15,8 +15,6 @@ app.get('/',function(req,res){
 	res.render('index');
 });
 
-var server = app.listen(8000, function(){
-	console.log('listening on port 8000');
+var server = app.listen(8080, function(){
+	console.log('listening on port 8080');
 })
-
-// var io = require('socket.io').listen(server);
