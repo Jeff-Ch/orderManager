@@ -43,8 +43,34 @@ module.exports = {
 				res.json();
 			}
 		})
+	},
+
+	one: function(req, res){
+		Customer.find({_id: req.body.id}, function(err, customer){
+			if(err){
+				console.log('Error in One method of customers.js controller');
+			} else{
+				res.json(customer);
+			}
+		})
+	},
+
+	update: function(req, res){
+		if(req.body.id == false){
+			res.json({'name':{'message': 'Error Occurred, Please re-select customer from customers page to try again'}});
+		}
+		if(req.body.name == ""){
+			res.json({'name':{'message': 'Name cannot be blank'}});
+		} else{
+			req.body.name = req.body.name.toUpperCase();
+			Customer.findOneAndUpdate({_id: req.body.id}, {name: req.body.name}, {runValidators: true}, function(err){
+				if(err){
+					res.json(err.errors);
+				} else{
+					res.json({'name':{'message': 'Name succesfully changed'}});
+				}
+			});
+		}
 	}
-
-
 }
 

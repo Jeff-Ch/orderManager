@@ -25,6 +25,14 @@ module.exports = function(app){
 		customers.all(req, res);
 	});
 
+	app.post('/customer', function(req, res){
+		customers.one(req, res);
+	})
+
+	app.post('/updatecustomer', function(req, res){
+		customers.update(req, res);
+	})
+
 	app.post('/addcustomer', function(req, res){
 		customers.create(req, res);
 	})

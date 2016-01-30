@@ -1,7 +1,8 @@
 <div ng-app = 'myApp' ng-controller = 'customersController'>
 	<div ng-if="name_exists">
 		<div ng-repeat= 'error in name_exists'>
-			<p ng-bind='error.message'></p>
+			<div class="alert alert-danger" ng-bind='error.message'>
+			</div>
 		</div>
 	</div>
 	<div id = 'side'  class ='col-md-3 col-sm-3'>

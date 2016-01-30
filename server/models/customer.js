@@ -8,7 +8,7 @@ var nameValidator = [
     message: 'Name should be greater {ARGS[0]} characters'
   }),
   validate({
-    validator: 'isAlpha',
+    validator: 'isAscii',
     passIfEmpty: true,
     message: 'Name should contain alphabetic characters only'
   })
