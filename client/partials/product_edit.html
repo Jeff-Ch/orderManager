@@ -1,0 +1,31 @@
+<div ng-app = 'myApp' ng-controller = 'productsController'>
+	<div ng-if="msg">
+		<div ng-repeat= 'alert in msg'>
+			<div ng-if = "alert.message.length != 28">
+				<div class="alert alert-danger" ng-bind='alert.message'>
+				</div>
+			</div>
+			<div ng-if = "alert.message.length == 28">
+				<div class="alert alert-success" ng-bind='alert.message'>
+				</div>
+			</div>	
+		</div>
+	</div>
+	<form>
+		<div class='row'>
+			<p class='text-center'><strong>Current Quantity: {{getdata[0].quantity}}</strong></p>
+			<div class="form-group col-md-2 col-md-offset-5">
+				<label for="quantity">Add Quantity:</label>
+				<input type="number" class="form-control" id="quantity" min ='1' ng-model = 'product.quantity'></input>
+			</div>
+		</div>
+		<div class='row'>
+			<div class="form-group">
+				<button type="submit" class="btn btn-success center-block" ng-click ='updateProduct()'>Update Quantity</button>
+			</div>
+		</div>
+	</form>
+	<div class='row'>
+		<a href="#/products" class='btn btn-primary col-md-2 col-md-offset-5'>Back to Products Page</a>
+	</div>
+</div>

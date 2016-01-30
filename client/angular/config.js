@@ -5,7 +5,6 @@ var myApp = angular.module('myApp', ['ngRoute'])
     return {
         saveDataResponse:function (data) {
             dataResponse = data;
-            console.log(data);
         },
         getDataResponse:function () {
             return dataResponse;
@@ -35,6 +34,9 @@ myApp.config(function ($routeProvider) {
 })
 .when('/order/edit/',{
     templateUrl: 'partials/order_edit.html'
+})
+.when('/product/edit/',{
+    templateUrl: 'partials/product_edit.html'
 })
   .otherwise({
       redirectTo: '/'

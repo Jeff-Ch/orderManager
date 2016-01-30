@@ -59,4 +59,13 @@ module.exports = function(app){
 	app.post('/addproduct', function(req, res){
 		products.create(req, res);
 	})
+	app.post('/deleteproduct', function(req, res){
+		products.remove(req, res);
+	})
+	app.post('/product', function(req, res){
+		products.one(req, res);
+	})
+	app.post('/updateproduct', function(req, res){
+		products.update(req, res);
+	})
 }

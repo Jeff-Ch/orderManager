@@ -46,10 +46,16 @@
 			</div>
 		</div>
 		<div class = 'products' ng-repeat = "product in products | filter: { name: filter_name }">
-			<img src = '{{ product.url }}' height = 120px width = 90px>
-			<p class = 'product' ng-bind = 'product.name'></p>
-			<p class = 'product'>(<span ng-bind = 'product.quantity'></span> left)</p>
-			<button type='button' class='btn btn-success' ng-click = 'editProduct(product._id)'>Edit</button>  
+			<img class='center-block' ng-src = '{{product.url}}' height = 120px width = 90px>
+			<div ng-if='product.quantity <= 0'>
+				<p class = 'outofstock' ng-bind = 'product.name'></p>
+				<p class = 'outofstock'>(<span ng-bind = 'product.quantity'></span> in Debt)</p>
+			</div>
+			<div ng-if='product.quantity > 0'>
+				<p class = 'product' ng-bind = 'product.name'></p>
+				<p class = 'product'>(<span ng-bind = 'product.quantity'></span> left)</p>
+			</div>
+			<button type='button' class='btn btn-success' ng-click = 'editProduct(product._id)'>Edit</button>  <button type='button' class='btn btn-danger' ng-click = 'removeProduct(product._id)'>Delete</button>  
 		</div>
 	</div>
 </div>

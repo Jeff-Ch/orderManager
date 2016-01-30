@@ -59,17 +59,23 @@ myApp.controller('ordersController', function ($scope, orderFactory, customerFac
 
     $scope.addOrder = function() {
         $scope.new_order.date = new Date();
+
         var new_order_price = 1;
         productFactory.find_one($scope.new_order.product, function(product){
             if(product[0]){
                 new_order_price = product[0].price;
             };
+            $scope.product_id = product[0]._id;
+            $scope.current_quantity = product[0].quantity;
             $scope.new_order.total = $scope.new_order.quantity * new_order_price;
-            console.log($scope.new_order.total);
             orderFactory.addOrder($scope.new_order, function(errors){
                 $scope.errors = errors;
                 orderFactory.getOrders(function(data){
                     $scope.orders = data;
+                    $scope.product = {'id': $scope.product_id, 'quantity': $scope.current_quantity - $scope.new_order.quantity};
+                    productFactory.updateProduct($scope.product, function(msg){
+                        $scope.msg = msg;
+                    });
                     $scope.new_order = {};
                 });
             })
@@ -96,7 +102,6 @@ myApp.controller('ordersController', function ($scope, orderFactory, customerFac
         if(!$scope.getdata[0]){
             $scope.order.id = false;
         } else{
-            console.log($scope.getdata[0]._id)
             $scope.order.id = $scope.getdata[0]._id;
         }
         orderFactory.updateOrder($scope.order, function(msg){
