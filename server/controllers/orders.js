@@ -45,17 +45,16 @@ module.exports = {
 
 	update: function(req, res){
 		if(req.body.id == false){
-			res.json({'name':{'message': 'Error Occurred, Please re-select customer from customers page to try again'}});
+			res.json({'name':{'message': 'Error Occurred, Please re-select order from orders page to try again'}});
 		}
-		if(req.body.name == ""){
-			res.json({'name':{'message': 'Name cannot be blank'}});
+		if(req.body.status == ""){
+			res.json({'name':{'message': 'Status cannot be blank'}});
 		} else{
-			req.body.name = req.body.name.toUpperCase();
-			Order.findOneAndUpdate({_id: req.body.id}, {name: req.body.name}, {runValidators: true}, function(err){
+			Order.findOneAndUpdate({_id: req.body.id}, {status: req.body.status}, function(err){
 				if(err){
 					res.json(err.errors);
 				} else{
-					res.json({'name':{'message': 'Name succesfully changed'}});
+					res.json({'name':{'message': 'Status succesfully updated'}});
 				}
 			});
 		}

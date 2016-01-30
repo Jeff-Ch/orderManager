@@ -38,7 +38,7 @@ myApp.factory('orderFactory',function($http){
 
 
 
-myApp.controller('ordersController', function ($scope, orderFactory, customerFactory, productFactory, dataService){
+myApp.controller('ordersController', function ($scope, orderFactory, customerFactory, productFactory, $location, dataService){
     $scope.orders = [];
     $scope.customers =[];
     orderFactory.getOrders(function (data){
@@ -55,6 +55,7 @@ myApp.controller('ordersController', function ($scope, orderFactory, customerFac
 
     $scope.getdata = dataService.getDataResponse();
     $scope.new_order = {};
+    $scope.order = {'status': ""};
 
     $scope.addOrder = function() {
         $scope.new_order.date = new Date();
@@ -85,7 +86,7 @@ myApp.controller('ordersController', function ($scope, orderFactory, customerFac
     }
 
     $scope.editOrder = function(id){
-        orderFactory.getCustomer(id, function(data){
+        orderFactory.getOrder(id, function(data){
             dataService.saveDataResponse(data);
             $location.path('/order/edit');
         })
@@ -95,9 +96,10 @@ myApp.controller('ordersController', function ($scope, orderFactory, customerFac
         if(!$scope.getdata[0]){
             $scope.order.id = false;
         } else{
+            console.log($scope.getdata[0]._id)
             $scope.order.id = $scope.getdata[0]._id;
         }
-        OrderFactory.updateOrder($scope.order, function(msg){
+        orderFactory.updateOrder($scope.order, function(msg){
             $scope.msg = msg;
         })
     }
