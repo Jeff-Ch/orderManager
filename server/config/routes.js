@@ -12,6 +12,13 @@ module.exports = function(app){
 	app.get('/orders', function(req, res){
 		orders.all(req, res);
 	});
+	app.post('/order', function(req, res){
+		orders.one(req, res);
+	})
+
+	app.post('/updateorder', function(req, res){
+		orders.update(req, res);
+	})
 
 	app.post('/addorder', function(req, res){
 		orders.create(req, res);
@@ -40,8 +47,11 @@ module.exports = function(app){
 	app.post('/deletecustomer', function(req, res){
 		customers.remove(req, res);
 	})
-	
 
+	app.post('/oneproduct', function(req, res){
+		products.find_by_name(req, res);
+	})
+	
 	app.get('/products', function(req, res){
 		products.all(req, res);
 	});

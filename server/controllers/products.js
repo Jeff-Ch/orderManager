@@ -17,16 +17,26 @@ module.exports = {
 		Product.find({name: req.body.name}, function(err, products){
 			if(err){
 			} else if(products[0]){
-				res.json({'msg': 'Product already exists'});
+				res.json({'name': {'message': 'Product already exists'}});
 			} 
 			else {
 				product.save(function(err){
 					if(err){
-						res.render('products', {errors: product.errors});
+						res.json(product.errors);
 					} else{
 						res.json();
 					}
 				})
+			}
+		})
+	},
+
+	find_by_name: function(req, res){
+		Product.find({name:req.body.name},function(err,product){
+			if(err){
+				res.json(err.errors);
+			} else{
+				res.json(product);
 			}
 		})
 	}

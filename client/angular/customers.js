@@ -5,7 +5,6 @@ myApp.factory('customerFactory',function($http){
 
     factory.getCustomers = function (callback){
         $http.get('/customers').success(function(output){
-            console.log(output);
             callback(output);
         })
     }

@@ -33,6 +33,9 @@ myApp.config(function ($routeProvider) {
   .when('/customer/edit/',{
     templateUrl: 'partials/customer_edit.html'
 })
+.when('/order/edit/',{
+    templateUrl: 'partials/order_edit.html'
+})
   .otherwise({
       redirectTo: '/'
   });

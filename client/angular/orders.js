@@ -1,25 +1,36 @@
 myApp.factory('orderFactory',function($http){
-	var orders = [];
+    var orders = [];
 
-	var factory = {};
+    var factory = {};
 
-	factory.getOrders = function (callback){
-		$http.get('/orders').success(function(output){
-				orders = output;
-				callback(orders);
-			})	
-		}
+    factory.getOrders = function (callback){
+        $http.get('/orders').success(function(output){
+            orders = output;
+            callback(orders);
+        })	
+    }
 
-	factory.addOrder = function(info, callback) {
-		console.log(info);
-		$http.post('/addorder', info).success(function(){
-			callback();
-		})
-	}
+    factory.addOrder = function(info, callback) {
+        $http.post('/addorder', info).success(function(error){
+            callback(error);
+        })
+    }
 
-	factory.deleteOrder= function(id, callback){
+    factory.deleteOrder= function(id, callback){
         $http.post('/deleteorder', {'id': id}).success(function(){
             callback();
+        })
+    }
+
+    factory.getOrder = function(id, callback){
+        $http.post('/order', {'id': id}).success(function(output){
+            callback(output);
+        })
+    }
+
+    factory.updateOrder = function(data, callback){
+        $http.post('/updateorder', data).success(function(output){
+            callback(output);
         })
     }
     return factory
@@ -27,11 +38,9 @@ myApp.factory('orderFactory',function($http){
 
 
 
-myApp.controller('ordersController', function ($scope, orderFactory, customerFactory, productFactory){
-    //  initialize an empty array so $scope.orders maintains a consistent data type
+myApp.controller('ordersController', function ($scope, orderFactory, customerFactory, productFactory, dataService){
     $scope.orders = [];
     $scope.customers =[];
-    // run the getOrders method and set $scope data in the callback
     orderFactory.getOrders(function (data){
         $scope.orders = data;
     })
@@ -41,20 +50,32 @@ myApp.controller('ordersController', function ($scope, orderFactory, customerFac
     });
 
     customerFactory.getCustomers(function(data){
-    	$scope.customers = data;
+        $scope.customers = data;
     })
 
-	$scope.addOrder = function() {
-		$scope.new_order.date = new Date();
-		orderFactory.addOrder($scope.new_order, function(){
-			orderFactory.getOrders(function(data){
-				$scope.orders = data;
-				$scope.new_order = {};
-			});
-		})
-	}
+    $scope.getdata = dataService.getDataResponse();
+    $scope.new_order = {};
 
-	$scope.removeOrder = function(id){
+    $scope.addOrder = function() {
+        $scope.new_order.date = new Date();
+        var new_order_price = 1;
+        productFactory.find_one($scope.new_order.product, function(product){
+            if(product[0]){
+                new_order_price = product[0].price;
+            };
+            $scope.new_order.total = $scope.new_order.quantity * new_order_price;
+            console.log($scope.new_order.total);
+            orderFactory.addOrder($scope.new_order, function(errors){
+                $scope.errors = errors;
+                orderFactory.getOrders(function(data){
+                    $scope.orders = data;
+                    $scope.new_order = {};
+                });
+            })
+        })
+    }
+
+    $scope.removeOrder = function(id){
         orderFactory.deleteOrder(id, function(){
             orderFactory.getOrders(function(data){
                 $scope.orders = data;
@@ -62,6 +83,24 @@ myApp.controller('ordersController', function ($scope, orderFactory, customerFac
             })
         })
     }
-    
+
+    $scope.editOrder = function(id){
+        orderFactory.getCustomer(id, function(data){
+            dataService.saveDataResponse(data);
+            $location.path('/order/edit');
+        })
+    }
+
+    $scope.updateOrder = function(){
+        if(!$scope.getdata[0]){
+            $scope.order.id = false;
+        } else{
+            $scope.order.id = $scope.getdata[0]._id;
+        }
+        OrderFactory.updateOrder($scope.order, function(msg){
+            $scope.msg = msg;
+        })
+    }
+
 
 })

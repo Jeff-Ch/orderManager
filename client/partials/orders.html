@@ -1,4 +1,10 @@
 <div ng-app = 'myApp' ng-controller = 'ordersController'>
+	<div ng-if="errors">
+		<div ng-repeat= 'error in errors'>
+			<div class="alert alert-danger" ng-bind='error.message'>
+			</div>
+		</div>
+	</div>
 	<div id = 'side'  class ='col-md-3 col-sm-3'>
 		<h4 class="text-center">Add a new order</h4>
 		<form>
@@ -19,6 +25,15 @@
 					<label for="quantity">Quantity Ordered</label>
 					<input type="number" class="form-control" id="quantity" min ='0' ng-model = 'new_order.quantity'></input>
 				</div>
+				<div class="form-group col-md-8 col-md-offset-2">
+					<label for="status">Status</label>
+					<select class='form-control' ng-model = 'new_order.status'>
+						<option>Pending</option>
+						<option>Processing</option>
+						<option>Shipped</option>
+						<option>Cancelled</option>
+					</select>
+				</div>
 			</div>
 			<div class='row'>
 				<div class="form-group col-md-6 col-md-offset-4">
@@ -30,7 +45,7 @@
 
 	<div id = 'content' class ='col-md-8 col-sm-8'>
 		<div class='row'>
-			<div class='col-md-3 col-md-offset-1'>
+			<div class='col-md-3'>
 				<label for="search">Search by Product:</label>
 				<input type="text" class="form-control" id="search" ng-model = 'filter_product'>
 			</div>
@@ -44,13 +59,15 @@
 			</div>
 		</div><br>
 		<div class='row'>
-			<div class='col-md-9 col-md-offset-1'>
+			<div class='col-md-10'>
 				<table class='table table-hover'>
 					<thead>
 						<tr>
 							<th>Customer</th>
 							<th>Product</th>
 							<th>Quantity</th>
+							<th>Total</th>
+							<th>Status</th>
 							<th>Order Date</th>
 							<th>Action</th>
 						</tr>
@@ -60,6 +77,8 @@
 							<td ng-bind = 'order.name'></td>
 							<td ng-bind = 'order.product'></td>
 							<td ng-bind = 'order.quantity'></td>
+							<td>$ {{order.total}}</td>
+							<td ng-bind = 'order.status'></td>
 							<td ng-bind = "order.date | date : 'mediumDate'"></td>
 							<td><button  type='button' class='btn btn-success' ng-click = 'editOrder(order._id)'>Edit</button>  <button type='button' class='btn btn-danger' ng-click = 'removeOrder(order._id)'>Delete</button></td>
 						</tr>

@@ -20,11 +20,16 @@ myApp.factory('productFactory',function($http){
             callback();
         })
     }
-    // most important step: return the object so it can be used by the rest of our angular code
+
+    factory.find_one = function(name, callback){
+        $http.post('/oneproduct', {'name': name}).success(function(output){
+            callback(output);
+        })
+    }
     return factory
 });
 
-myApp.controller('productsController', function ($scope, productFactory){
+myApp.controller('productsController', function ($scope, productFactory, dataService){
     $scope.products = productFactory.getProducts(function(data){
             $scope.products = data;
             $scope.new_product = {};
@@ -32,8 +37,8 @@ myApp.controller('productsController', function ($scope, productFactory){
 
     $scope.addProduct = function (){
         $scope.new_product.date = new Date();
-        productFactory.addProduct($scope.new_product, function(name_exists){
-            $scope.name_exists = name_exists.msg;
+        productFactory.addProduct($scope.new_product, function(errors){
+            $scope.errors = errors;
             productFactory.getProducts(function(data){
                 $scope.products = data;
                 $scope.new_product = {};
